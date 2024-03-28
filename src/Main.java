@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 
 // Define the Task class
@@ -10,20 +9,23 @@ class Task {
     private String name;
     private int number;
 
-    public Task(int number,String name) {
-        this.number = number;
+    public Task(String name) {
         this.name = name;
     }
 
     public String getName() {
         return name;
     }
+    public void setNumber(int number){
+        this.number= number;
+    }
     public int getNumber(){
         return number;
     }
+
     @Override
     public String toString() {
-        return number + "." + name; // Return the task name when toString() is called
+        return  number + "." + name; // Return the task name when toString() is called
     }
 }
 class ToDo extends JFrame{
@@ -40,7 +42,6 @@ class ToDo extends JFrame{
      listModel = new DefaultListModel<>();
      taskList = new JList<>(listModel);
 
-     //scrollpane
      JScrollPane scrollPane = new JScrollPane(taskList);
      add(scrollPane, BorderLayout.CENTER);
 
@@ -56,7 +57,11 @@ class ToDo extends JFrame{
              if(taskName != null && !taskName.isEmpty()){
                  //new task object is created and added to list Model
                  Task task = new Task(taskName);
+                 //setting task number dynamically based on position
+                 task.setNumber(listModel.getSize()+1);
                  listModel.addElement(task);
+
+
              }
          }
      });
@@ -77,6 +82,9 @@ class ToDo extends JFrame{
      buttonPanel.add(deleteButton);
      add(buttonPanel, BorderLayout.SOUTH);
     }
+
+
+
 
 }
 public class Main {
